@@ -2,8 +2,20 @@ using Xunit;
 
 namespace EResult.UnitTests;
 
+public class Test 
+{
+    public int MyProperty { get; set; }
+    public string MyProperty2 { get; set; }
+}
+
 public class ResultTests
 {
+    public Result<Test> return_test() => 
+        new Test{
+            MyProperty = 100,
+            MyProperty2 = "teste"
+        };
+
     [Fact]
     public void Should_Create_Result_Success_And_Failled()
     {
@@ -35,6 +47,8 @@ public class ResultTests
 
         Result<int> r4 = ("MUST_BE_AN_ERROR_RESULT", "SOME DESCRIPTION");
         Assert.False(r4.Success);
+
+        var test = return_test();
         
         Assert.Throws<ResultException>(() => r4 + 10);
     }
